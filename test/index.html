@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<script>
+  function loadDocO(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        myObj = JSON.parse(this.responseText);
+        console.log(this.responseText);
+        document.getElementById("R").innerHTML=myObj.field1+ " %";
+        document.getElementById("H").innerHTML=myObj.field2+ " %";
+      }
+    };
+    xhttp.open("GET", "http://api.thingspeak.com/channels/1542552/feed/last.json?callback=?", true);
+    xhttp.send();
+  }
+
+  function loadDoc() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        myObj = JSON.parse(this.responseText);
+        console.log(this.responseText);
+        document.getElementById("T").innerHTML=myObj.field1 +" ºC";
+        document.getElementById("P").innerHTML=myObj.field2 + " mmHg";
+        document.getElementById("U").innerHTML=myObj.field3 + " %";
+        document.getElementById("CO").innerHTML=myObj.field4 + " PPM";
+        document.getElementById("L").innerHTML=myObj.field5 + " %";
+        document.getElementById("D").innerHTML=myObj.field6 + " ug/m³";
+        document.getElementById("W").innerHTML=myObj.field7 + " m/s";
+        document.getElementById("UV").innerHTML=myObj.field8 + " Index";
+      }
+    };
+
+
+    xhttp.open("GET", "http://api.thingspeak.com/channels/1536486/feed/last.json?callback=?", true);
+    xhttp.send();
+    setTimeout(function(){ loadDoc(); loadDocO(); }, 30000);
+  }
+  loadDoc();
+  loadDocO();
+</script>
+
+
+
+<head>
+  <title>Weather Station</title>
+  <link rel="stylesheet" href="index.css">
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+</head>
+<body style="background-color:#0f0f0f;">
+
+  <h1 align="center" style="color:#a0a0a0;">Tempo Agora</h1>
+  <div align="center">
+      <div id="top">
+          <label>Temperatura 🌡️: </label><label id="T" style="color:#a0a0a0;">null</label><br>
+          <label>Pressão 💨: </label><label id="P" style="color:#a0a0a0;">null</label><br>
+          <label>Umidade 💧: </label><label id="U" style="color:#a0a0a0;">null</label><br>
+          <label>CO 🚗: </label><label id="CO" style="color:#a0a0a0;">null</label><br>
+          <label>Luminosidade 💡: </label><label id="L" style="color:#a0a0a0;">null</label><br>
+          <label>Poeira 🌫️: </label><label id="D" style="color:#a0a0a0;">null</label><br>
+          <label>Vento 🍃: </label><label id="W" style="color:#a0a0a0;">null</label><br>
+          <label>UV ☀️: </label><label id="UV" style="color:#a0a0a0;">null</label><br>
+          <label>Chuva 🌧️: </label><label id="R" style="color:#a0a0a0;">null</label><br>
+          <label>Umidade do Solo 🌲: </label><label id="H" style="color:#a0a0a0;">null</label><br>
+      </div>
+  </div>
+
+
+  <table align="center" cellspacing="0" cellpadding="0" border="0" style="width:100%; max-width:600px;overflow-x: auto;">
+    <tr>
+      <td colspan="2"><h1 align="center" style="color:#a0a0a0;">Graficos</h1></td>
+    </tr>
+    <tr>
+      <td align="center" style="padding:5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1536486/charts/1?bgcolor=%23afafaf&color=%2303396c&days=3&dynamic=true&results=10000&title=Temperatura&type=line&xaxis=Horario&yaxis=%C2%BAC&yaxismax=40&yaxismin=0"></iframe></td>
+      <td align="center" style="padding:5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1536486/charts/2?bgcolor=%23afafaf&color=%2303396c&days=3&dynamic=true&results=10000&title=Press%C3%A3o&type=line&xaxis=Horario&yaxis=mmHg&yaxismax=700&yaxismin=650"></iframe></td>
+    </tr>
+    <tr>
+      <td align="center" style="padding:5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1536486/charts/3?bgcolor=%23afafaf&color=%2303396c&days=3&dynamic=true&results=10000&title=Umidade&type=line&xaxis=Horario&yaxis=%25&yaxismax=100&yaxismin=0"></iframe></td>
+      <td align="center" style="padding:5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1536486/charts/4?bgcolor=%23afafaf&color=%2303396c&days=3&dynamic=true&results=10000&title=CO&type=line&xaxis=Horario&yaxis=PPM&yaxismax=2&yaxismin=0"></iframe></td>
+    </tr>
+
+    <tr>
+      <td align="center" style="padding:5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1536486/charts/5?bgcolor=%23afafaf&color=%2303396c&days=3&dynamic=true&results=10000&title=Ilumina%C3%A7%C3%A3o&type=line&xaxis=Horario&yaxis=%25&yaxismax=100&yaxismin=0"></iframe></td>
+      <td align="center" style="padding:5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1536486/charts/6?bgcolor=%23afafaf&color=%2303396c&days=3&dynamic=true&results=10000&title=Poeira&type=line&xaxis=Horario&yaxis=mg%2Fm%C2%B3&yaxismax=200&yaxismin=10"></iframe></td>
+    </tr>
+    <tr>
+      <td align="center" style="padding:5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1536486/charts/7?bgcolor=%23afafaf&color=%2303396c&days=3&dynamic=true&results=10000&title=Velocidade+do+Vento&type=line&xaxis=Horario&yaxis=m%2Fs&yaxismax=2&yaxismin=0"></iframe></td>
+      <td align="center" style="padding:5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1536486/charts/8?bgcolor=%23afafaf&color=%2303396c&days=3&dynamic=true&results=10000&title=UV&type=line&xaxis=Horario&yaxis=Indice&yaxismax=11&yaxismin=0"></iframe></td>
+    </tr>
+
+    <tr>
+      <td align="center" style="padding:5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1542552/charts/1?bgcolor=%23afafaf&color=%2303396c&days=3&dynamic=true&results=10000&title=Chuva&type=line&xaxis=Horario&yaxis=%25&yaxismax=100&yaxismin=0"></iframe></td>
+      <td align="center" style="padding:5px;"><iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1542552/charts/2?bgcolor=%23afafaf&color=%2303396c&days=3&dynamic=true&results=10000&title=Umidade+do+Solo&type=line&xaxis=Horario&yaxis=%25&yaxismax=100&yaxismin=0"></iframe></td>
+    </tr>
+  </table>
+</html>
